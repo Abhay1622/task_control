@@ -1,103 +1,152 @@
-import Image from "next/image";
+import { getServerSession } from "next-auth"
+import { redirect } from "next/navigation"
+import { authOptions } from "./api/auth/[...nextauth]/route"
+import Link from "next/link"
+import { signOut } from "next-auth/react"
+import Navbar from "@/components/Navbar"
 
-export default function Home() {
+export default async function Home() {
+
+  
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-pulse delay-500"></div>
+      </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Main content */}
+      <div className="relative z-10 flex flex-col items-center justify-center px-6 py-8 min-h-screen">
+        {/* Hero section */}
+        <div className="text-center mb-12 mt-8">
+          <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mb-6 shadow-xl ">
+            <span className="text-4xl">🎯</span>
+          </div>
+          <h1 className="text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-6 leading-tight">
+            Master Your Next Interview
+          </h1>
+          <p className="text-gray-600 text-xl max-w-3xl mx-auto mb-8 leading-relaxed">
+            Transform your interview skills with AI-powered practice sessions, personalized feedback, and comprehensive preparation tools designed for success.
+          </p>
+          
+          {/* Quick stats */}
+          <div className="flex justify-center items-center space-x-8 mb-8">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600">500+</div>
+              <div className="text-sm text-gray-600">Questions</div>
+            </div>
+            <div className="w-px h-8 bg-gray-300"></div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-indigo-600">24/7</div>
+              <div className="text-sm text-gray-600">Available</div>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Welcome card */}
+        <div className="max-w-4xl w-full bg-white/80 backdrop-blur-sm shadow-2xl rounded-2xl p-8 border border-white/20">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-800 mb-2">
+              {/* Welcome back, {session.user?.name?.split(' ')[0] || session.user?.email?.split('@')[0]} 👋 */}
+            </h2>
+            <p className="text-gray-600 text-lg">
+              Ready to ace your next interview? Let's get you prepared!
+            </p>
+          </div>
+
+          {/* Feature cards */}
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 text-center border border-blue-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <div className="text-3xl mb-3">💼</div>
+              <h3 className="font-semibold text-gray-800 mb-2">Role-Specific</h3>
+              <p className="text-sm text-gray-600">Practice for your specific job role with targeted questions</p>
+            </div>
+            
+            <Link 
+            href={'/aiInterview'}>
+              <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 text-center border border-purple-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <div className="text-3xl mb-3">🤖</div>
+              <h3 className="font-semibold text-gray-800 mb-2">AI-Powered</h3>
+              <p className="text-sm text-gray-600">Get instant feedback and personalized improvement tips</p>
+            </div>
+            </Link>
+            
+            <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-xl p-6 text-center border border-indigo-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
+              <div className="text-3xl mb-3">📊</div>
+              <h3 className="font-semibold text-gray-800 mb-2">Track Progress</h3>
+              <p className="text-sm text-gray-600">Monitor your improvement and identify areas to focus on</p>
+            </div>
+          </div>
+
+          {/* CTA buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
+            <Link
+              href="/quiz"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-full text-lg shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex items-center gap-2"
+            >
+              <span>🚀</span>
+              Start Mock Interview
+            </Link>
+            
+            <Link
+              href="/dashboard"
+              className="bg-white hover:bg-gray-50 text-gray-700 font-semibold px-8 py-4 rounded-full text-lg shadow-lg border-2 border-gray-200 transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
+            >
+              <span>📈</span>
+              View Dashboard
+            </Link>
+          </div>
+
+          {/* Stats preview */}
+          <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-200">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600">0</div>
+              <div className="text-sm text-gray-600">Interviews</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-purple-600">0%</div>
+              <div className="text-sm text-gray-600">Success Rate</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-indigo-600">0</div>
+              <div className="text-sm text-gray-600">Skills Improved</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Quote section */}
+        <div className="mt-12 max-w-2xl text-center">
+          <blockquote className="text-lg text-gray-600 italic mb-4">
+            "The key to successful interviewing is preparation, practice, and confidence."
+          </blockquote>
+          <div className="w-12 h-px bg-gradient-to-r from-blue-500 to-purple-500 mx-auto"></div>
+        </div>
+
+        {/* Quick actions */}
+        <div className="mt-8 flex flex-wrap gap-4 justify-center">
+          <Link
+            href="/roles"
+            className="bg-white/70 hover:bg-white/90 text-gray-700 px-4 py-2 rounded-full text-sm font-medium shadow-md transition-all duration-300 hover:shadow-lg border border-white/30"
+          >
+            Browse Job Roles
+          </Link>
+          <Link
+            href="/practice"
+            className="bg-white/70 hover:bg-white/90 text-gray-700 px-4 py-2 rounded-full text-sm font-medium shadow-md transition-all duration-300 hover:shadow-lg border border-white/30"
+          >
+            Quick Practice
+          </Link>
+          <Link
+            href="/settings"
+            className="bg-white/70 hover:bg-white/90 text-gray-700 px-4 py-2 rounded-full text-sm font-medium shadow-md transition-all duration-300 hover:shadow-lg border border-white/30"
+          >
+            Settings
+          </Link>
+        </div>
+      </div>
     </div>
-  );
+  )
 }

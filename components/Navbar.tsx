@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { signOut } from 'next-auth/react'
 
 interface NavbarProps {
@@ -14,6 +15,8 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ session }) => {
+  const pathname = usePathname()
+
   const username =
     session?.user?.name?.split(' ')[0] ||
     session?.user?.email?.split('@')[0] ||
@@ -23,6 +26,13 @@ const Navbar: React.FC<NavbarProps> = ({ session }) => {
     session?.user?.name?.charAt(0) ||
     session?.user?.email?.charAt(0) ||
     'U'
+
+  const links = [
+    { href: '/', label: 'Home' },
+    { href: '/aiInterview', label: 'Mock Interview' },
+    { href: '/dashboard', label: 'Dashboard' },
+    { href: '/quiz', label: 'Practice' },
+  ]
 
   return (
     <nav className="relative z-20 bg-white/80 backdrop-blur-md shadow-lg border-b border-white/20">
@@ -40,21 +50,22 @@ const Navbar: React.FC<NavbarProps> = ({ session }) => {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
+          {/* Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              <Link href="/" className="text-blue-600 hover:text-blue-800 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                Home
-              </Link>
-              <Link href="/aiInterview" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                Mock Interview
-              </Link>
-              <Link href="/dashboard" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                Dashboard
-              </Link>
-              <Link href="/quiz" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                Practice
-              </Link>
+              {links.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                    pathname === href
+                      ? 'text-blue-600 font-semibold'
+                      : 'text-gray-700 hover:text-blue-600'
+                  }`}
+                >
+                  {label}
+                </Link>
+              ))}
             </div>
           </div>
 

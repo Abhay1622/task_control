@@ -5,7 +5,7 @@ import { authOptions } from "../../auth/[...nextauth]/route"
 import User from "@/models/User"
 import { NextResponse } from "next/server"
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions)
     if (!session?.user?.email) {
@@ -22,8 +22,8 @@ export async function GET(req: Request) {
       .sort({ createdAt: -1 })
 
     return NextResponse.json({ results }, { status: 200 })
-  } catch (err) {
-    console.error("Error fetching user results:", err)
+  } catch (error) {
+    console.error("Error fetching user results:", error)
     return NextResponse.json({ error: "Failed to get results" }, { status: 500 })
   }
 }

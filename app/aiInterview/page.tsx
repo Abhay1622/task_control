@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 interface Question {
   question: string;
@@ -16,13 +16,31 @@ const AIInterviewPage: React.FC = () => {
   const [count, setCount] = useState<number>(5);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
-  const [submitted, setSubmitted] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const [showResults, setShowResults] = useState<boolean>(false);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(0);
   const [timerActive, setTimerActive] = useState<boolean>(false);
+
+  const handleSubmit = useCallback((): void => {
+    let correctCount = 0;
+    questions.forEach((q, i) => {
+      if (answers[i] === q.answer) correctCount++;
+    });
+    setScore(correctCount);
+    setShowResults(true);
+    setTimerActive(false);
+  }, [questions, answers]);
+
+  const handleNext = useCallback((): void => {
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+      setTimeRemaining(30);
+    } else {
+      handleSubmit();
+    }
+  }, [currentQuestion, questions.length, handleSubmit]);
 
   const handleGenerate = async (): Promise<void> => {
     if (!topic.trim()) return;
@@ -56,8 +74,8 @@ const AIInterviewPage: React.FC = () => {
 
         setQuestions(data.questions);
         setAnswers(new Array(data.questions.length).fill(''));
-        setSubmitted(false);
         setCurrentQuestion(0);
+        setShowResults(false);
         
         // Start timer (30 seconds per question)
         setTimeRemaining(30);
@@ -77,30 +95,9 @@ const AIInterviewPage: React.FC = () => {
     setAnswers(updated);
   };
 
-  const handleNext = (): void => {
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-      setTimeRemaining(30);
-    } else {
-      handleSubmit();
-    }
-  };
-
-  const handleSubmit = (): void => {
-    let correctCount = 0;
-    questions.forEach((q, i) => {
-      if (answers[i] === q.answer) correctCount++;
-    });
-    setScore(correctCount);
-    setSubmitted(true);
-    setShowResults(true);
-    setTimerActive(false);
-  };
-
   const resetQuiz = (): void => {
     setQuestions([]);
     setAnswers([]);
-    setSubmitted(false);
     setCurrentQuestion(0);
     setShowResults(false);
     setScore(0);
@@ -118,7 +115,7 @@ const AIInterviewPage: React.FC = () => {
     } else if (timeRemaining === 0 && timerActive) {
       handleNext();
     }
-  }, [timeRemaining, timerActive]);
+  }, [timeRemaining, timerActive, handleNext]);
 
   const getDifficultyColor = (diff: Difficulty): string => {
     switch(diff) {

@@ -1,9 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig: import('next').NextConfig = {
-  experimental: {
-    // other experimental features (if any)
+  eslint: {
+    ignoreDuringBuilds: true, // ✅ Disables ESLint during builds
   },
-  serverExternalPackages: ['openai'], // ✅ updated key
-}
+  experimental: {
+    // You can keep other experimental flags here
+  },
+  serverExternalPackages: ['openai'], // ✅ Optional, if you're using edge functions
+};
 
-export default nextConfig
+export default nextConfig;

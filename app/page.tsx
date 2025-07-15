@@ -1,14 +1,6 @@
-import { getServerSession } from "next-auth"
-import { redirect } from "next/navigation"
-import { authOptions } from "./api/auth/[...nextauth]/route"
 import Link from "next/link"
-import { signOut } from "next-auth/react"
-import Navbar from "@/components/Navbar"
 
 export default async function Home() {
-
-  
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
       {/* Background decorative elements */}
@@ -53,7 +45,7 @@ export default async function Home() {
               {/* Welcome back, {session.user?.name?.split(' ')[0] || session.user?.email?.split('@')[0]} 👋 */}
             </h2>
             <p className="text-gray-600 text-lg">
-              Ready to ace your next interview? Let's get you prepared!
+              Ready to ace your next interview? Let&apos;s get you prepared!
             </p>
           </div>
 
@@ -120,7 +112,7 @@ export default async function Home() {
         {/* Quote section */}
         <div className="mt-12 max-w-2xl text-center">
           <blockquote className="text-lg text-gray-600 italic mb-4">
-            "The key to successful interviewing is preparation, practice, and confidence."
+            &ldquo;The key to successful interviewing is preparation, practice, and confidence.&rdquo;
           </blockquote>
           <div className="w-12 h-px bg-gradient-to-r from-blue-500 to-purple-500 mx-auto"></div>
         </div>

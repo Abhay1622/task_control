@@ -110,10 +110,10 @@ Number of questions: ${count}
         console.log("🔍 Raw Gemini Output Length:", content.length)
         
         // Clean the response
-        let cleanContent = content
+        const cleanContent = content
             .replace(/```json/gi, '')
             .replace(/```/g, '')
-            .replace(/^\s*[\r\n]/gm, '') // Remove empty lines
+            .replace(/^\s*[\r\n]/gm, '') 
             .trim()
 
         // Find JSON array boundaries

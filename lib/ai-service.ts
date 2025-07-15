@@ -74,24 +74,25 @@ Number of Questions: ${params.numberOfQuestions}
   }
 
   private static parseQuestions(content: string | null): GeneratedQuestion[] {
-    if (!content) throw new Error('No content received from AI')
-    
-    try {
-      // Clean the content to extract JSON
-      const jsonMatch = content.match(/\[[\s\S]*\]/)
-      if (!jsonMatch) throw new Error('No JSON found in response')
-      
-      const questions = JSON.parse(jsonMatch[0])
-      return questions.map((q: any) => ({
-        question: q.question,
-        options: q.options,
-        correctAnswer: q.correctAnswer,
-        explanation: q.explanation,
-        difficulty: q.difficulty
-      }))
-    } catch (error) {
-      console.error('Error parsing AI response:', error)
-      throw new Error('Failed to parse AI response')
-    }
+  if (!content) throw new Error('No content received from AI')
+
+  try {
+    // Clean the content to extract JSON
+    const jsonMatch = content.match(/\[[\s\S]*\]/)
+    if (!jsonMatch) throw new Error('No JSON found in response')
+
+    const questions: GeneratedQuestion[] = JSON.parse(jsonMatch[0])
+    return questions.map((q: GeneratedQuestion) => ({
+      question: q.question,
+      options: q.options,
+      correctAnswer: q.correctAnswer,
+      explanation: q.explanation,
+      difficulty: q.difficulty
+    }))
+  } catch (error) {
+    console.error('Error parsing AI response:', error)
+    throw new Error('Failed to parse AI response')
   }
+}
+
 }

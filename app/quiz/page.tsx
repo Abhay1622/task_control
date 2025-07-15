@@ -3,8 +3,14 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 
+interface Quiz {
+  _id: string
+  title: string
+  category: string
+}
+
 export default function QuizListPage() {
-  const [quizzes, setQuizzes] = useState([])
+  const [quizzes, setQuizzes] = useState<Quiz[]>([])
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -28,7 +34,7 @@ export default function QuizListPage() {
         <p>Loading...</p>
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
-          {quizzes.map((quiz: any) => (
+          {quizzes.map((quiz) => (
             <Link
               key={quiz._id}
               href={`/quiz/${quiz._id}`}

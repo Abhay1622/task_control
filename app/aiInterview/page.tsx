@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 
+
 interface Question {
   question: string;
   options: string[];
@@ -48,7 +49,6 @@ const AIInterviewPage: React.FC = () => {
     setIsGenerating(true);
     
     try {
-        // Make actual API call to your backend
         const response = await fetch('/api/aiInterview', {
             method: 'POST',
             headers: {
@@ -105,7 +105,6 @@ const AIInterviewPage: React.FC = () => {
     setTimerActive(false);
   };
 
-  // Timer effect
   useEffect(() => {
     if (timerActive && timeRemaining > 0) {
       const timer = setTimeout(() => {

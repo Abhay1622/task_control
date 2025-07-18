@@ -2,18 +2,24 @@
 
 import { useState } from 'react'
 
+type Question = {
+  question: string
+  options: string[]
+  answer: string
+}
+
 export default function CreateQuizPage() {
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState('')
-  const [questions, setQuestions] = useState([
+  const [questions, setQuestions] = useState<Question[]>([
     { question: '', options: ['', '', '', ''], answer: '' }
   ])
   const [success, setSuccess] = useState(false)
 
-  const handleQuestionChange = (index: number, key: string, value: string) => {
+  const handleQuestionChange = (index: number, key: keyof Question, value: string) => {
     const updated = [...questions]
     if (key === 'options') {
-      updated[index].options = value.split(',') // comma-separated
+      updated[index].options = value.split(',').map(option => option.trim())
     } else {
       updated[index][key] = value
     }
@@ -77,7 +83,7 @@ export default function CreateQuizPage() {
               className="w-full p-2 border"
               type="text"
               placeholder="Options (comma-separated)"
-              value={q.options.join(',')}
+              value={q.options.join(', ')}
               onChange={(e) => handleQuestionChange(i, 'options', e.target.value)}
               required
             />

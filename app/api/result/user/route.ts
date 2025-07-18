@@ -1,7 +1,7 @@
 import { connectToDB } from "@/lib/mongodb"
 import Result from "@/models/Result"
 import { getServerSession } from "next-auth"
-import { authOptions } from "../../auth/[...nextauth]/route"
+import { authOptions } from "@/lib/auth"
 import User from "@/models/User"
 import { NextResponse } from "next/server"
 

@@ -1,4 +1,3 @@
-// lib/auth.ts
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { connectToDB } from "@/lib/mongodb";
@@ -28,23 +27,21 @@ export const authOptions: NextAuthOptions = {
         return { 
           id: user._id.toString(), 
           email: user.email,
-          name: user.name // Include name from your User model
+          name: user.name
         };
       },
     }),
   ],
   pages: {
     signIn: "/login",
-    // Add error page if you want custom error handling
     error: "/login",
   },
   session: {
     strategy: "jwt",
-    maxAge: 24 * 60 * 60, // 24 hours
+    maxAge: 24 * 60 * 60,
   },
   callbacks: {
     async jwt({ token, user }) {
-      // Persist the user data in the token
       if (user) {
         token.id = user.id;
         token.email = user.email;

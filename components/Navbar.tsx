@@ -27,85 +27,65 @@ const Navbar: React.FC<NavbarProps> = ({ session }) => {
     session?.user?.email?.charAt(0) ||
     'U'
 
-  const links = [
-    { href: '/', label: 'Home' },
-    { href: '/aiInterview', label: 'Mock Interview' },
-    { href: '/dashboard', label: 'Dashboard' },
-    { href: '/quiz', label: 'Practice' },
-  ]
 
   return (
-    <nav className="relative z-20 bg-white/80 backdrop-blur-md shadow-lg border-b border-white/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <div className="fixed  top-4 left-1/2 transform -translate-x-1/2 z-50 w-[60%] max-w-6xl ">
+      <nav className="bg-black/20 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl px-6 py-3">
+        <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white text-xl font-bold">AI</span>
+              <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
+                <span className="text-white text-sm font-bold">AI</span>
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-lg font-bold text-white">
                 InterviewPrep
               </span>
             </Link>
           </div>
 
-          {/* Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              {links.map(({ href, label }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                    pathname === href
-                      ? 'text-blue-600 font-semibold'
-                      : 'text-gray-700 hover:text-blue-600'
-                  }`}
-                >
-                  {label}
-                </Link>
-              ))}
-            </div>
-          </div>
 
-          {/* User Info and Sign Out */}
-          <div className="flex items-center space-x-4">
-            {session?.user && (
+          {/* User Info and Auth */}
+          <div className="flex items-center space-x-3">
+            {session?.user ? (
               <div className="hidden md:flex items-center space-x-3">
-                <div className="text-sm">
-                  <span className="text-gray-600">Welcome,</span>
-                  <span className="font-semibold text-gray-800 ml-1">
+                <div className="flex items-center space-x-2 bg-white/5 rounded-lg px-3 py-2">
+                  <div className="w-6 h-6 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full flex items-center justify-center">
+                    <span className="text-white text-xs font-semibold">
+                      {userInitial.toUpperCase()}
+                    </span>
+                  </div>
+                  <span className="text-white text-sm font-medium">
                     {username}
                   </span>
                 </div>
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-semibold">
-                    {userInitial.toUpperCase()}
-                  </span>
-                </div>
+                <button
+                  onClick={() => signOut()}
+                  className="bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-300 hover:text-red-200 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 backdrop-blur-sm"
+                >
+                  Sign Out
+                </button>
               </div>
+            ) : (
+              <Link href={'/login'}>
+                <button className="bg-gradient-to-r from-purple-500/80 to-blue-500/80 hover:from-purple-500 hover:to-blue-500 text-white px-5 py-2 rounded-lg text-sm font-medium transition-all duration-200 backdrop-blur-sm border border-white/10 hover:border-white/20 shadow-lg">
+                  Sign in
+                </button>
+              </Link>
             )}
-
-            <button
-              onClick={() => signOut()}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
-            >
-              Sign Out
-            </button>
 
             {/* Mobile Menu */}
             <div className="md:hidden">
-              <button className="text-gray-700 hover:text-blue-600 focus:outline-none">
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <button className="text-gray-300 hover:text-white focus:outline-none transition-colors duration-200 bg-white/5 p-2 rounded-lg">
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
             </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   )
 }
 

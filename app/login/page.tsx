@@ -26,7 +26,7 @@ export default function LoginPage() {
       if (result?.error) {
         setError("Invalid email or password");
       } else {
-        router.push("/dashboard"); // Redirect to dashboard after successful login
+        router.push("/aiInterview");
         router.refresh();
       }
     } catch (error) {

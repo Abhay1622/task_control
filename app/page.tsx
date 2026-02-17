@@ -23,7 +23,7 @@ export default function Home() {
         />
       </div>
 
-      
+
 
       {/* Main content */}
       <main className={`relative top-8 z-10 text-center max-w-4xl mx-auto px-6 transition-all duration-1000 ease-out transform ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
@@ -59,9 +59,9 @@ export default function Home() {
             </button>
           </Link>
 
-          <Link href={"/quiz"}>
+          <Link href={"/dashboard"}>
             <button className="relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-gray-200 border border-gray-600 rounded-full hover:border-purple-400 hover:text-white transition-all duration-300 hover:scale-105 hover:shadow-lg bg-black/20 backdrop-blur-sm">
-              Explore Skills
+              Your Dashboard
               <span className="ml-2">→</span>
             </button>
           </Link>
@@ -69,17 +69,20 @@ export default function Home() {
 
         {/* Features */}
         <div className="flex flex-wrap justify-center gap-8 text-center mt-10">
-          <div className="flex items-center gap-2 p-3 rounded-lg bg-gray-800/40 backdrop-blur-sm hover:bg-gray-700/50 transition-all">
-            <span className="text-purple-400 text-xl">🧠</span>
-            <span className="text-gray-300 text-sm font-medium">AI Powered</span>
+          <div className="flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800/40 backdrop-blur-sm hover:bg-gray-700/50 transition-all w-40">
+            <span className="text-purple-400 text-3xl">🎙️</span>
+            <span className="text-gray-200 text-sm font-bold">Voice Interview</span>
+            <span className="text-gray-400 text-xs">Real-time AI Chat</span>
           </div>
-          <div className="flex items-center gap-2 p-3 rounded-lg bg-gray-800/40 backdrop-blur-sm hover:bg-gray-700/50 transition-all">
-            <span className="text-blue-400 text-xl">👤</span>
-            <span className="text-gray-300 text-sm font-medium">Personalised</span>
+          <div className="flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800/40 backdrop-blur-sm hover:bg-gray-700/50 transition-all w-40">
+            <span className="text-blue-400 text-3xl">📊</span>
+            <span className="text-gray-200 text-sm font-bold">Skill Analytics</span>
+            <span className="text-gray-400 text-xs">Track progress</span>
           </div>
-          <div className="flex items-center gap-2 p-3 rounded-lg bg-gray-800/40 backdrop-blur-sm hover:bg-gray-700/50 transition-all">
-            <span className="text-green-400 text-xl">✋</span>
-            <span className="text-gray-300 text-sm font-medium">Hands On</span>
+          <div className="flex flex-col items-center gap-2 p-4 rounded-lg bg-gray-800/40 backdrop-blur-sm hover:bg-gray-700/50 transition-all w-40">
+            <span className="text-green-400 text-3xl">🔥</span>
+            <span className="text-gray-200 text-sm font-bold">Gamification</span>
+            <span className="text-gray-400 text-xs">Leagues & Streaks</span>
           </div>
         </div>
 

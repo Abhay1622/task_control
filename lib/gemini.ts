@@ -1,6 +1,10 @@
-import { GoogleGenerativeAI } from '@google/generative-ai'
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)
-const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-export default model
+// Use environment variable or fallback for now (though env var is better)
+const API_KEY = process.env.GOOGLE_API_KEY || "AIzaSyDvNwr2aNaF_rVS8LaGU8ZKyk6CvDXY-kw";
+
+export const genAI = new GoogleGenerativeAI(API_KEY);
+
+// using flash model for better speed/cost/availability
+export const interviewModel = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });

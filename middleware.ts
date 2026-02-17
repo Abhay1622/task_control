@@ -25,15 +25,18 @@ export const config = {
      * Match all request paths except for the ones starting with:
      * - api/auth (NextAuth API routes)
      * - api/register (your registration API)
+     * - api/aiInterview (AI Interview API - public for guests)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - login (login page)
      * - register (register page)
+     * - aiInterview (AI Interview page - public for guests)
+     * - quiz (quiz page - public for guests)
      * - / (home page - currently public, change if needed)
      * 
      * This regex protects ALL other routes
      */
-    "/((?!api/auth|api/register|_next/static|_next/image|favicon.ico|login|register|$).*)",
+    "/((?!api/auth|api/register|api/aiInterview|_next/static|_next/image|favicon.ico|login|register|aiInterview|quiz|$).*)",
   ],
 };

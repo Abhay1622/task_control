@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
+import { useSession } from "next-auth/react"
 
 export default function QuizAttemptPage() {
   const { id } = useParams()
@@ -31,27 +32,28 @@ export default function QuizAttemptPage() {
     setAnswers(updated)
   }
 
+  const { data: session } = useSession()
+
   const handleSubmit = async () => {
-  let correct = 0
-  quiz.questions.forEach((q: any, i: number) => {
-    if (answers[i] === q.answer) correct++
-  })
-  setScore(correct)
-  setSubmitted(true)
+    let correct = 0
+    quiz.questions.forEach((q: any, i: number) => {
+      if (answers[i] === q.answer) correct++
+    })
+    setScore(correct)
+    setSubmitted(true)
 
-  const userId = "64e7ef5a4a5f01e5e88cd389"
-
-  await fetch('/api/result', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      userId,
-      quizId: quiz._id,
-      score: correct,
-      total: quiz.questions.length,
-    }),
-  })
-}
+    if (session?.user) {
+      await fetch('/api/result', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          quizId: quiz.id,
+          score: correct,
+          total: quiz.questions.length,
+        }),
+      })
+    }
+  }
 
 
   if (!quiz) return <p className="p-6">Loading quiz...</p>
@@ -69,9 +71,8 @@ export default function QuizAttemptPage() {
               <button
                 key={j}
                 onClick={() => handleSelect(i, opt)}
-                className={`border p-2 rounded ${
-                  answers[i] === opt ? 'bg-blue-500 text-white' : 'hover:bg-gray-100'
-                }`}
+                className={`border p-2 rounded ${answers[i] === opt ? 'bg-blue-500 text-white' : 'hover:bg-gray-100'
+                  }`}
               >
                 {opt}
               </button>

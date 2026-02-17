@@ -51,7 +51,7 @@ export const authOptions: NextAuthOptions = {
 
         return {
           id: user.id,
-          email: user.email,
+          email: user.email!, // We know email exists if we found the user by email
           name: user.name,
         };
       },

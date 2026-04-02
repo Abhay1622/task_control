@@ -1,9 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true, // ✅ Disables ESLint during builds
-  },
   experimental: {
     // You can keep other experimental flags here
   },
